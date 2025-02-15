@@ -36,7 +36,7 @@
                 Command="{Binding BrowseSourceDirectoryCommand}"
                 Content="Browse"
                 DockPanel.Dock="Right" />
-            <TextBox Text="{Binding SourceDirectory}" />
+            <TextBox Text="{Binding SourceDirectory, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel
             Grid.Row="1"
@@ -46,7 +46,7 @@
                 Command="{Binding BrowseTargetDirectoryCommand}"
                 Content="Browse"
                 DockPanel.Dock="Right" />
-            <TextBox Text="{Binding TargetDirectory}" />
+            <TextBox Text="{Binding TargetDirectory, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
 
         <ListBox Grid.Row="2" ItemsSource="{Binding SourceContent}" />

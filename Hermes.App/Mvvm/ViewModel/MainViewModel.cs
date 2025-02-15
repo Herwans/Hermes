@@ -23,34 +23,40 @@ namespace Hermes.App.Mvvm.ViewModel
         private void BrowseSourceDirectory()
         {
             SourceDirectory = BrowseDirectory();
-            SourceContent.Clear();
-
-            if (SourceDirectory != "")
-            {
-                foreach (string file in Directory.GetFiles(SourceDirectory))
-                {
-                    SourceContent.Add(Path.GetFileName(file));
-                }
-                foreach (string dir in Directory.GetDirectories(SourceDirectory))
-                {
-                    SourceContent.Add(Path.GetFileName(dir));
-                }
-            }
         }
 
         [RelayCommand]
         private void BrowseTargetDirectory()
         {
             TargetDirectory = BrowseDirectory();
-            TargetContent.Clear();
+        }
 
-            if (TargetDirectory != "")
+        partial void OnSourceDirectoryChanging(string? value)
+        {
+            SourceContent.Clear();
+            if (value != "" && Directory.Exists(value))
             {
-                foreach (string file in Directory.GetFiles(TargetDirectory))
+                foreach (string file in Directory.GetFiles(value))
+                {
+                    SourceContent.Add(Path.GetFileName(file));
+                }
+                foreach (string dir in Directory.GetDirectories(value))
+                {
+                    SourceContent.Add(Path.GetFileName(dir));
+                }
+            }
+        }
+
+        partial void OnTargetDirectoryChanging(string? value)
+        {
+            TargetContent.Clear();
+            if (value != "" && Directory.Exists(value))
+            {
+                foreach (string file in Directory.GetFiles(value))
                 {
                     TargetContent.Add(Path.GetFileName(file));
                 }
-                foreach (string dir in Directory.GetDirectories(TargetDirectory))
+                foreach (string dir in Directory.GetDirectories(value))
                 {
                     TargetContent.Add(Path.GetFileName(dir));
                 }
