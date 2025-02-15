@@ -1,0 +1,247 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  COLORS  -->
+    <!--  Primary  -->
+    <Color x:Key="PrimaryColor">#9C27B0</Color>
+    <Color x:Key="PrimaryHoverColor">#AB47BC</Color>
+    <Color x:Key="PrimaryFocusColor">#8E24AA</Color>
+    <Color x:Key="PrimaryPressedColor">#7B1FA2</Color>
+    <Color x:Key="PrimaryDisabledColor">#613F66</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="{StaticResource PrimaryHoverColor}" />
+    <SolidColorBrush x:Key="PrimaryFocusBrush" Color="{StaticResource PrimaryFocusColor}" />
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="{StaticResource PrimaryPressedColor}" />
+    <SolidColorBrush x:Key="PrimaryDisabledBrush" Color="{StaticResource PrimaryDisabledColor}" />
+
+    <!--  Highlight  -->
+    <Color x:Key="HighlightColor">#00E676</Color>
+    <Color x:Key="HighlightHoverColor">#33EB91</Color>
+    <Color x:Key="HighlightFocusColor">#00C853</Color>
+    <Color x:Key="HighlightPressedColor">#00A74D</Color>
+    <Color x:Key="HighlightDisabledColor">#4A7F64</Color>
+
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" />
+    <SolidColorBrush x:Key="HighlightHoverBrush" Color="{StaticResource HighlightHoverColor}" />
+    <SolidColorBrush x:Key="HighlightFocusBrush" Color="{StaticResource HighlightFocusColor}" />
+    <SolidColorBrush x:Key="HighlightPressedBrush" Color="{StaticResource HighlightPressedColor}" />
+    <SolidColorBrush x:Key="HighlightDisabledBrush" Color="{StaticResource HighlightDisabledColor}" />
+
+    <!--  Danger  -->
+    <Color x:Key="DangerColor">#D32F2F</Color>
+    <Color x:Key="DangerHoverColor">#E53935</Color>
+    <Color x:Key="DangerFocusColor">#C62828</Color>
+    <Color x:Key="DangerPressedColor">#B71C1C</Color>
+    <Color x:Key="DangerDisabledColor">#7A4F4F</Color>
+
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="DangerHoverBrush" Color="{StaticResource DangerHoverColor}" />
+    <SolidColorBrush x:Key="DangerFocusBrush" Color="{StaticResource DangerFocusColor}" />
+    <SolidColorBrush x:Key="DangerPressedBrush" Color="{StaticResource DangerPressedColor}" />
+    <SolidColorBrush x:Key="DangerDisabledBrush" Color="{StaticResource DangerDisabledColor}" />
+
+    <!--  Control colors  -->
+    <Color x:Key="ControlColor">#424242</Color>
+    <Color x:Key="ControlHoverColor">#535353</Color>
+    <Color x:Key="ControlFocusColor">#3A3A3A</Color>
+    <Color x:Key="ControlPressedColor">#2E2E2E</Color>
+    <Color x:Key="ControlDisabledColor">#5A5A5A</Color>
+
+    <SolidColorBrush x:Key="ControlBrush" Color="{StaticResource ControlColor}" />
+    <SolidColorBrush x:Key="ControlHoverBrush" Color="{StaticResource ControlHoverColor}" />
+    <SolidColorBrush x:Key="ControlFocusBrush" Color="{StaticResource ControlFocusColor}" />
+    <SolidColorBrush x:Key="ControlPressedBrush" Color="{StaticResource ControlPressedColor}" />
+    <SolidColorBrush x:Key="ControlDisabledBrush" Color="{StaticResource ControlDisabledColor}" />
+
+    <!--  Background & Surface  -->
+    <Color x:Key="BackgroundColor">#121212</Color>
+    <Color x:Key="SurfaceColor">#1E1E1E</Color>
+
+    <!--  Text Colors  -->
+    <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
+    <Color x:Key="SecondaryTextColor">#B0B0B0</Color>
+    <Color x:Key="DisabledTextColor">#757575</Color>
+    <Color x:Key="ButtonTextColor">#FFFFFF</Color>
+    <Color x:Key="ButtonTextDisabledColor">#B0B0B0</Color>
+    <Color x:Key="HighlightTextColor">#00E676</Color>
+    <Color x:Key="ErrorTextColor">#FF5252</Color>
+    <Color x:Key="WarningTextColor">#FFCA28</Color>
+
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}" />
+    <SolidColorBrush x:Key="DisabledTextBrush" Color="{StaticResource DisabledTextColor}" />
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{StaticResource ButtonTextColor}" />
+    <SolidColorBrush x:Key="ButtonTextDisabledBrush" Color="{StaticResource ButtonTextDisabledColor}" />
+    <SolidColorBrush x:Key="HighlightTextBrush" Color="{StaticResource HighlightTextColor}" />
+    <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource ErrorTextColor}" />
+    <SolidColorBrush x:Key="WarningTextBrush" Color="{StaticResource WarningTextColor}" />
+
+    <!--  Background & Surface  -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+
+    <!--  CUSTOM BLOCK  -->
+    <Style x:Key="Tile" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource ControlBrush}" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="Margin" Value="0,8,8,8" />
+    </Style>
+
+    <Style x:Key="TileText" TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="12pt" />
+    </Style>
+
+    <Style x:Key="DefaultButton" TargetType="Button">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="FontSize" Value="12pt" />
+        <Setter Property="Margin" Value="4pt" />
+        <Setter Property="Background" Value="{StaticResource ControlBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Name="border"
+                        Padding="16pt,8pt"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ControlHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ControlPressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ControlFocusBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="PrimaryButton"
+        BasedOn="{StaticResource DefaultButton}"
+        TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Name="border"
+                        Padding="16pt,8pt"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryPressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryFocusBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="DangerButton"
+        BasedOn="{StaticResource DefaultButton}"
+        TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Name="border"
+                        Padding="16pt,8pt"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="5">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource DangerHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource DangerPressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource DangerFocusBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  CONTROLS  -->
+    <Style BasedOn="{StaticResource DefaultButton}" TargetType="Button" />
+
+    <Style TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="8,0,8,0" />
+        <Setter Property="Height" Value="32pt" />
+        <Setter Property="FontSize" Value="12pt" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource ControlBrush}" />
+    </Style>
+
+    <Style TargetType="ComboBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="8,0,8,0" />
+        <Setter Property="Height" Value="32pt" />
+        <Setter Property="FontSize" Value="12pt" />
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Height" Value="32pt" />
+        <Setter Property="FontSize" Value="12pt" />
+    </Style>
+
+    <Style TargetType="TabControl">
+        <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="16pt" />
+    </Style>
+
+    <Style TargetType="TabItem">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid Name="Panel">
+                        <ContentPresenter
+                            x:Name="ContentSite"
+                            Margin="16"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="ContentSite" Property="TextBlock.FontWeight" Value="Medium" />
+                            <Setter TargetName="ContentSite" Property="TextBlock.Foreground" Value="{StaticResource HighlightTextBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
