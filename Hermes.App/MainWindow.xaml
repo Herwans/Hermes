@@ -7,8 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodel="clr-namespace:Hermes.App.Mvvm.ViewModel"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1280"
+    Height="720"
+    MinWidth="920"
+    MinHeight="680"
     Background="{StaticResource BackgroundBrush}"
     mc:Ignorable="d">
     <Grid Margin="16">
