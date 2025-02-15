@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Hermes.App"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:Hermes.App.Mvvm.ViewModel"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -20,6 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Content="Source directory" />
         <Label
@@ -30,20 +32,30 @@
             Grid.Row="1"
             Grid.Column="0"
             LastChildFill="True">
-            <Button Content="Browse" DockPanel.Dock="Right" />
-            <TextBox />
+            <Button
+                Command="{Binding BrowseSourceDirectoryCommand}"
+                Content="Browse"
+                DockPanel.Dock="Right" />
+            <TextBox Text="{Binding SourceDirectory}" />
         </DockPanel>
         <DockPanel
             Grid.Row="1"
             Grid.Column="1"
             LastChildFill="True">
-            <Button Content="Browse" DockPanel.Dock="Right" />
-            <TextBox />
+            <Button
+                Command="{Binding BrowseTargetDirectoryCommand}"
+                Content="Browse"
+                DockPanel.Dock="Right" />
+            <TextBox Text="{Binding TargetDirectory}" />
         </DockPanel>
-        <ListBox Grid.Row="2" />
-        <ListBox Grid.Row="2" Grid.Column="1" />
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Content="Move" />
+
+        <ListBox Grid.Row="2" ItemsSource="{Binding SourceContent}" />
+        <ListBox
+            Grid.Row="2"
+            Grid.Column="1"
+            ItemsSource="{Binding TargetContent}" />
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <Button Command="{Binding MoveCommand}" Content="Move" />
         </StackPanel>
     </Grid>
 </Window>
