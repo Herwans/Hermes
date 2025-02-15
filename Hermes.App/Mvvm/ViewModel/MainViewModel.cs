@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Hermes.App.Helpers;
 using System.Collections.ObjectModel;
 using System.IO;
 
@@ -81,28 +82,18 @@ namespace Hermes.App.Mvvm.ViewModel
         [RelayCommand]
         private void Move()
         {
-            if (Directory.Exists(SourceDirectory)
-                && Directory.Exists(TargetDirectory)
-                && SourceDirectory != TargetDirectory)
+            if (SourceDirectory != null && TargetDirectory != null && SourceDirectory != TargetDirectory)
             {
                 string[] files = Directory.GetFiles(SourceDirectory);
                 string[] folders = Directory.GetDirectories(SourceDirectory);
                 foreach (string file in files)
                 {
-                    string newLocation = Path.Combine(TargetDirectory, Path.GetFileName(file));
-                    if (!File.Exists(newLocation))
-                    {
-                        File.Move(file, newLocation);
-                    }
+                    ExplorerHelper.Move(file, TargetDirectory);
                 }
 
                 foreach (string directory in folders)
                 {
-                    string newLocation = Path.Combine(TargetDirectory, Path.GetFileName(directory));
-                    if (!Directory.Exists(newLocation))
-                    {
-                        Directory.Move(directory, newLocation);
-                    }
+                    ExplorerHelper.Move(directory, TargetDirectory);
                 }
             }
         }
