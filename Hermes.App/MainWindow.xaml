@@ -37,8 +37,9 @@
             <Button
                 Command="{Binding BrowseSourceDirectoryCommand}"
                 Content="Browse"
-                DockPanel.Dock="Right" />
-            <TextBox Text="{Binding SourceDirectory, UpdateSourceTrigger=PropertyChanged}" />
+                DockPanel.Dock="Right"
+                IsEnabled="{Binding IsUnlocked}" />
+            <TextBox IsEnabled="{Binding IsUnlocked}" Text="{Binding SourceDirectory, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel
             Grid.Row="1"
@@ -47,8 +48,9 @@
             <Button
                 Command="{Binding BrowseTargetDirectoryCommand}"
                 Content="Browse"
-                DockPanel.Dock="Right" />
-            <TextBox Text="{Binding TargetDirectory, UpdateSourceTrigger=PropertyChanged}" />
+                DockPanel.Dock="Right"
+                IsEnabled="{Binding IsUnlocked}" />
+            <TextBox IsEnabled="{Binding IsUnlocked}" Text="{Binding TargetDirectory, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
 
         <ListBox Grid.Row="2" ItemsSource="{Binding SourceContent}" />

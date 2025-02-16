@@ -20,6 +20,9 @@ namespace Hermes.App.Mvvm.ViewModel
         [ObservableProperty]
         private ObservableCollection<string> sourceContent = [];
 
+        [ObservableProperty]
+        private bool isUnlocked = true;
+
         public MainViewModel()
         {
             MoveAsyncCommand = new AsyncRelayCommand(MoveAsync);
@@ -39,6 +42,12 @@ namespace Hermes.App.Mvvm.ViewModel
 
         partial void OnSourceDirectoryChanging(string? value)
         {
+            if (value != null)
+                SourceContentUpdate(value);
+        }
+
+        private void SourceContentUpdate(string value)
+        {
             SourceContent.Clear();
             if (value != "" && Directory.Exists(value))
             {
@@ -54,6 +63,12 @@ namespace Hermes.App.Mvvm.ViewModel
         }
 
         partial void OnTargetDirectoryChanging(string? value)
+        {
+            if (value != null)
+                TargetContentUpdate(value);
+        }
+
+        private void TargetContentUpdate(string value)
         {
             TargetContent.Clear();
             if (value != "" && Directory.Exists(value))
@@ -109,17 +124,25 @@ namespace Hermes.App.Mvvm.ViewModel
         {
             if (SourceDirectory != null && TargetDirectory != null && SourceDirectory != TargetDirectory)
             {
+                IsUnlocked = false;
                 string[] files = Directory.GetFiles(SourceDirectory);
                 string[] folders = Directory.GetDirectories(SourceDirectory);
                 foreach (string file in files)
                 {
                     await ExplorerHelper.MoveAsync(file, TargetDirectory);
+                    TargetContentUpdate(TargetDirectory);
+                    SourceContentUpdate(SourceDirectory);
                 }
 
                 foreach (string directory in folders)
                 {
                     await ExplorerHelper.MoveAsync(directory, TargetDirectory);
+                    TargetContentUpdate(TargetDirectory);
+                    SourceContentUpdate(SourceDirectory);
                 }
+                IsUnlocked = true;
+                TargetContentUpdate(TargetDirectory);
+                SourceContentUpdate(SourceDirectory);
             }
         }
     }
