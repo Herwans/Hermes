@@ -20,6 +20,11 @@ namespace Hermes.App.Mvvm.ViewModel
         [ObservableProperty]
         private ObservableCollection<string> sourceContent = [];
 
+        public MainViewModel()
+        {
+            MoveAsyncCommand = new AsyncRelayCommand(MoveAsync);
+        }
+
         [RelayCommand]
         private void BrowseSourceDirectory()
         {
@@ -94,6 +99,26 @@ namespace Hermes.App.Mvvm.ViewModel
                 foreach (string directory in folders)
                 {
                     ExplorerHelper.Move(directory, TargetDirectory);
+                }
+            }
+        }
+
+        public IAsyncRelayCommand MoveAsyncCommand { get; }
+
+        private async Task MoveAsync()
+        {
+            if (SourceDirectory != null && TargetDirectory != null && SourceDirectory != TargetDirectory)
+            {
+                string[] files = Directory.GetFiles(SourceDirectory);
+                string[] folders = Directory.GetDirectories(SourceDirectory);
+                foreach (string file in files)
+                {
+                    await ExplorerHelper.MoveAsync(file, TargetDirectory);
+                }
+
+                foreach (string directory in folders)
+                {
+                    await ExplorerHelper.MoveAsync(directory, TargetDirectory);
                 }
             }
         }

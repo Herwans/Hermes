@@ -58,6 +58,7 @@
             ItemsSource="{Binding TargetContent}" />
         <StackPanel Grid.Row="4" Orientation="Horizontal">
             <Button Command="{Binding MoveCommand}" Content="Move" />
+            <Button Command="{Binding MoveAsyncCommand}" Content="Move Async" />
         </StackPanel>
     </Grid>
 </Window>
