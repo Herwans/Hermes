@@ -124,11 +124,66 @@ namespace Hermes.App.Helpers
                 Mode = FileMode.CreateNew,
                 Access = FileAccess.Write,
                 Options = FileOptions.WriteThrough,
-                BufferSize = 1024*1024,
+                BufferSize = 8 * 1024 * 1024,
                 PreallocationSize = sourceStream.Length
             };
             using FileStream destination = new FileStream(newLocation, createForWriting);
-            await sourceStream.CopyToAsync(destination, 1024*1024, cancellationToken);
+            await sourceStream.CopyToAsync(destination, 8 * 1024 * 1024, cancellationToken);
+        }
+
+        public static async Task CopyFileParallelAsync(string source, string target, CancellationToken cancellationToken = default)
+        {
+            const int bufferSize = 64 * 1024 * 1024;
+            const int maxConcurrentReads = 4;
+            SemaphoreSlim semaphore = new SemaphoreSlim(maxConcurrentReads);
+
+            string filename = Path.GetFileName(source);
+            string newLocation = Path.Combine(target, filename);
+
+            using FileStream sourceStream = new FileStream(source, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, FileOptions.SequentialScan);
+            using FileStream destinationStream = new FileStream(newLocation, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize, FileOptions.WriteThrough);
+
+            long fileSize = sourceStream.Length;
+            long totalBytesCopied = 0;
+
+            List<Task> tasks = new List<Task>();
+
+            for (long offset = 0; offset < fileSize; offset += bufferSize)
+            {
+                await semaphore.WaitAsync(cancellationToken);
+
+                tasks.Add(Task.Run(async () =>
+                {
+                    try
+                    {
+                        byte[] buffer = new byte[bufferSize];
+                        int bytesRead;
+
+                        lock (sourceStream)
+                        {
+                            sourceStream.Seek(offset, SeekOrigin.Begin);
+                            bytesRead = sourceStream.Read(buffer, 0, buffer.Length);
+                        }
+
+                        if (bytesRead > 0)
+                        {
+                            lock (destinationStream)
+                            {
+                                destinationStream.Seek(offset, SeekOrigin.Begin);
+                                destinationStream.Write(buffer, 0, bytesRead);
+                            }
+
+                            Interlocked.Add(ref totalBytesCopied, bytesRead);
+                        }
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+                }, cancellationToken));
+            }
+
+            await Task.WhenAll(tasks);
         }
 
         private static bool IsEmpty(string directory)
