@@ -124,11 +124,11 @@ namespace Hermes.App.Helpers
                 Mode = FileMode.CreateNew,
                 Access = FileAccess.Write,
                 Options = FileOptions.WriteThrough,
-                BufferSize = 0,
+                BufferSize = 1024*1024,
                 PreallocationSize = sourceStream.Length
             };
             using FileStream destination = new FileStream(newLocation, createForWriting);
-            await sourceStream.CopyToAsync(destination, cancellationToken);
+            await sourceStream.CopyToAsync(destination, 1024*1024, cancellationToken);
         }
 
         private static bool IsEmpty(string directory)
