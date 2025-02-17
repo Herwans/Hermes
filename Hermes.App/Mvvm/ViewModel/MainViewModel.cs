@@ -23,6 +23,12 @@ namespace Hermes.App.Mvvm.ViewModel
         [ObservableProperty]
         private bool isUnlocked = true;
 
+        [ObservableProperty]
+        private int currentValue = 0;
+
+        [ObservableProperty]
+        private int maximumValue = 1;
+
         public MainViewModel()
         {
             MoveAsyncCommand = new AsyncRelayCommand(MoveAsync);
@@ -127,11 +133,14 @@ namespace Hermes.App.Mvvm.ViewModel
                 IsUnlocked = false;
                 string[] files = Directory.GetFiles(SourceDirectory);
                 string[] folders = Directory.GetDirectories(SourceDirectory);
+                MaximumValue = files.Length + folders.Length;
+                CurrentValue = 0;
                 foreach (string file in files)
                 {
                     await ExplorerHelper.MoveAsync(file, TargetDirectory);
                     TargetContentUpdate(TargetDirectory);
                     SourceContentUpdate(SourceDirectory);
+                    CurrentValue++;
                 }
 
                 foreach (string directory in folders)
@@ -139,6 +148,7 @@ namespace Hermes.App.Mvvm.ViewModel
                     await ExplorerHelper.MoveAsync(directory, TargetDirectory);
                     TargetContentUpdate(TargetDirectory);
                     SourceContentUpdate(SourceDirectory);
+                    CurrentValue++;
                 }
                 IsUnlocked = true;
                 TargetContentUpdate(TargetDirectory);

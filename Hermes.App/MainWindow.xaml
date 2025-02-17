@@ -58,9 +58,21 @@
             Grid.Row="2"
             Grid.Column="1"
             ItemsSource="{Binding TargetContent}" />
+        <ProgressBar
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Height="32"
+            Maximum="{Binding MaximumValue}"
+            Value="{Binding CurrentValue}" />
         <StackPanel Grid.Row="4" Orientation="Horizontal">
-            <Button Command="{Binding MoveCommand}" Content="Move" />
-            <Button Command="{Binding MoveAsyncCommand}" Content="Move Async" />
+            <Button
+                Command="{Binding MoveCommand}"
+                Content="Move"
+                IsEnabled="{Binding IsUnlocked}" />
+            <Button
+                Command="{Binding MoveAsyncCommand}"
+                Content="Move Async"
+                IsEnabled="{Binding IsUnlocked}" />
         </StackPanel>
     </Grid>
 </Window>
