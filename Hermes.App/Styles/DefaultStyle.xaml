@@ -118,6 +118,9 @@
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{StaticResource ControlFocusBrush}" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource SecondaryTextBrush}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

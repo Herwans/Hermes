@@ -9,9 +9,11 @@ namespace Hermes.App.Mvvm.ViewModel
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
         private string? sourceDirectory;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
         private string? targetDirectory;
 
         [ObservableProperty]
@@ -21,26 +23,24 @@ namespace Hermes.App.Mvvm.ViewModel
         private ObservableCollection<string> sourceContent = [];
 
         [ObservableProperty]
-        private bool isUnlocked = true;
-
-        [ObservableProperty]
         private int currentValue = 0;
 
         [ObservableProperty]
         private int maximumValue = 1;
 
-        public MainViewModel()
-        {
-            MoveAsyncCommand = new AsyncRelayCommand(MoveAsync);
-        }
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BrowseSourceDirectoryCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BrowseTargetDirectoryCommand))]
+        private bool isBusy = false;
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private void BrowseSourceDirectory()
         {
             SourceDirectory = BrowseDirectory();
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private void BrowseTargetDirectory()
         {
             TargetDirectory = BrowseDirectory();
@@ -105,32 +105,12 @@ namespace Hermes.App.Mvvm.ViewModel
             return "";
         }
 
-        [RelayCommand]
-        private void Move()
-        {
-            if (SourceDirectory != null && TargetDirectory != null && SourceDirectory != TargetDirectory)
-            {
-                string[] files = Directory.GetFiles(SourceDirectory);
-                string[] folders = Directory.GetDirectories(SourceDirectory);
-                foreach (string file in files)
-                {
-                    ExplorerHelper.Move(file, TargetDirectory);
-                }
-
-                foreach (string directory in folders)
-                {
-                    ExplorerHelper.Move(directory, TargetDirectory);
-                }
-            }
-        }
-
-        public IAsyncRelayCommand MoveAsyncCommand { get; }
-
+        [RelayCommand(CanExecute = nameof(CanMove))]
         private async Task MoveAsync()
         {
+            IsBusy = true;
             if (SourceDirectory != null && TargetDirectory != null && SourceDirectory != TargetDirectory)
             {
-                IsUnlocked = false;
                 string[] files = Directory.GetFiles(SourceDirectory);
                 string[] folders = Directory.GetDirectories(SourceDirectory);
                 MaximumValue = files.Length + folders.Length;
@@ -150,10 +130,22 @@ namespace Hermes.App.Mvvm.ViewModel
                     SourceContentUpdate(SourceDirectory);
                     CurrentValue++;
                 }
-                IsUnlocked = true;
                 TargetContentUpdate(TargetDirectory);
                 SourceContentUpdate(SourceDirectory);
             }
+            IsBusy = false;
+        }
+
+        private bool IsNotBusy()
+        {
+            return !IsBusy;
+        }
+
+        private bool CanMove()
+        {
+            return IsNotBusy()
+                && Directory.Exists(SourceDirectory)
+                && TargetDirectory != "";
         }
     }
 }
