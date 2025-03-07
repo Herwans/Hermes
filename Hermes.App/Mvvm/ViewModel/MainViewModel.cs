@@ -9,9 +9,11 @@ namespace Hermes.App.Mvvm.ViewModel
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
         private string? sourceDirectory;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
         private string? targetDirectory;
 
         [ObservableProperty]
@@ -20,19 +22,37 @@ namespace Hermes.App.Mvvm.ViewModel
         [ObservableProperty]
         private ObservableCollection<string> sourceContent = [];
 
-        [RelayCommand]
+        [ObservableProperty]
+        private int currentValue = 0;
+
+        [ObservableProperty]
+        private int maximumValue = 1;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MoveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BrowseSourceDirectoryCommand))]
+        [NotifyCanExecuteChangedFor(nameof(BrowseTargetDirectoryCommand))]
+        private bool isBusy = false;
+
+        [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private void BrowseSourceDirectory()
         {
             SourceDirectory = BrowseDirectory();
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(IsNotBusy))]
         private void BrowseTargetDirectory()
         {
             TargetDirectory = BrowseDirectory();
         }
 
         partial void OnSourceDirectoryChanging(string? value)
+        {
+            if (value != null)
+                SourceContentUpdate(value);
+        }
+
+        private void SourceContentUpdate(string value)
         {
             SourceContent.Clear();
             if (value != "" && Directory.Exists(value))
@@ -49,6 +69,12 @@ namespace Hermes.App.Mvvm.ViewModel
         }
 
         partial void OnTargetDirectoryChanging(string? value)
+        {
+            if (value != null)
+                TargetContentUpdate(value);
+        }
+
+        private void TargetContentUpdate(string value)
         {
             TargetContent.Clear();
             if (value != "" && Directory.Exists(value))
@@ -79,23 +105,47 @@ namespace Hermes.App.Mvvm.ViewModel
             return "";
         }
 
-        [RelayCommand]
-        private void Move()
+        [RelayCommand(CanExecute = nameof(CanMove))]
+        private async Task MoveAsync()
         {
+            IsBusy = true;
             if (SourceDirectory != null && TargetDirectory != null && SourceDirectory != TargetDirectory)
             {
                 string[] files = Directory.GetFiles(SourceDirectory);
                 string[] folders = Directory.GetDirectories(SourceDirectory);
+                MaximumValue = files.Length + folders.Length;
+                CurrentValue = 0;
                 foreach (string file in files)
                 {
-                    ExplorerHelper.Move(file, TargetDirectory);
+                    await ExplorerHelper.MoveAsync(file, TargetDirectory);
+                    TargetContentUpdate(TargetDirectory);
+                    SourceContentUpdate(SourceDirectory);
+                    CurrentValue++;
                 }
 
                 foreach (string directory in folders)
                 {
-                    ExplorerHelper.Move(directory, TargetDirectory);
+                    await ExplorerHelper.MoveAsync(directory, TargetDirectory);
+                    TargetContentUpdate(TargetDirectory);
+                    SourceContentUpdate(SourceDirectory);
+                    CurrentValue++;
                 }
+                TargetContentUpdate(TargetDirectory);
+                SourceContentUpdate(SourceDirectory);
             }
+            IsBusy = false;
+        }
+
+        private bool IsNotBusy()
+        {
+            return !IsBusy;
+        }
+
+        private bool CanMove()
+        {
+            return IsNotBusy()
+                && Directory.Exists(SourceDirectory)
+                && TargetDirectory != "";
         }
     }
 }
