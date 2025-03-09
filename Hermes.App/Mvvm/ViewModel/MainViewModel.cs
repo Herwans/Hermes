@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Hermes.App.Helpers;
+using Olympe.Common.Helpers;
 using System.Collections.ObjectModel;
 using System.IO;
 
@@ -117,7 +117,7 @@ namespace Hermes.App.Mvvm.ViewModel
                 CurrentValue = 0;
                 foreach (string file in files)
                 {
-                    await ExplorerHelper.MoveAsync(file, TargetDirectory);
+                    await SystemHelper.MoveAsync(file, TargetDirectory);
                     TargetContentUpdate(TargetDirectory);
                     SourceContentUpdate(SourceDirectory);
                     CurrentValue++;
@@ -125,7 +125,7 @@ namespace Hermes.App.Mvvm.ViewModel
 
                 foreach (string directory in folders)
                 {
-                    await ExplorerHelper.MoveAsync(directory, TargetDirectory);
+                    await SystemHelper.MoveAsync(directory, TargetDirectory);
                     TargetContentUpdate(TargetDirectory);
                     SourceContentUpdate(SourceDirectory);
                     CurrentValue++;
