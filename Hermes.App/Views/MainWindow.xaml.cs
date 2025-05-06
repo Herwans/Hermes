@@ -1,7 +1,7 @@
-﻿using Hermes.App.Mvvm.ViewModel;
+﻿using Hermes.App.ViewModels;
 using System.Windows;
 
-namespace Hermes.App;
+namespace Hermes.App.Views;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
